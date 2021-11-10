@@ -11,6 +11,7 @@ services:
     hostname: mhedev-php-7.4.25
     environment:
       - SERVICE_NAME=mhedev-php-7.4.25
+    command: php -v
 
   # Contenedor Wordpress
   mhedev-wordpress:
@@ -21,13 +22,12 @@ services:
     environment:
       - SERVICE_NAME=mhedev-wordpress
       - DATABASE_URL=mysql://mhedev:mhedev@mhedev-mysql:3306/mhedev
-      - APP_ENV=dev
-      - SYMFONY_ENV=dev
+      - XDEBUG_SESSION=1
       - DOCKER_HOST=172.17.0.1 # Se puede determinar su valor ejecutando 'ifconfig' y verificando la ip de la interfaz 'docker0'.
     volumes:
       - ./wordpress:/var/www/html
     ports:
-      - 8080:80
+      - '8080:80'
 
   # Servidor MySQL que precarga el fichero current.sql
   mhedev-mysql:
@@ -45,7 +45,7 @@ services:
     expose:
       - 3306
     ports:
-      - 3306:3306
+      - '3306:3306'
 
   # PhpMyAdmin disponible para operar con el servidor MySQL
   mhedev-phpmyadmin-loc:
@@ -59,6 +59,6 @@ services:
       - PMA_USER=root
       - PMA_PASSWORD=6aEGPf%2@4saAe*4h++94
     ports:
-      - 8081:80
+      - '8081:80'
     depends_on:
       - mhedev-mysql
