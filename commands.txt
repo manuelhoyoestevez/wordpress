@@ -1,0 +1,42 @@
+# Borrar ficheros autogenerados
+sudo rm -rf ./symfony/var ./symfony/vendor ./symfony/node_modules/ ./symfony/public/build/ ./symfony/public/bundles/ ./symfony/.php_cs.cache
+
+# Iniciar Webpack Encore
+docker exec -ti erisk-symfony yarn encore dev --watch
+
+# Eliminar base de datos
+docker exec -ti erisk-symfony php bin/console doctrine:database:drop --force
+
+# Crear base de datos
+docker exec -ti erisk-symfony php bin/console doctrine:database:create
+
+# Crear migración
+docker exec -ti erisk-symfony php bin/console make:migration --env dev
+
+# Incrementar migración
+docker exec -ti erisk-symfony php bin/console doctrine:migrations:diff
+
+# Ejecutar migración
+docker exec -ti erisk-symfony php bin/console doctrine:migrations:migrate
+
+# Ejecutar CsFixer
+docker exec -ti erisk-symfony vendor/bin/php-cs-fixer fix src
+
+docker exec -ti erisk-symfony vendor/bin/phpstan analyse --level 7 src
+
+docker exec -ti erisk-symfony vendor/bin/phpstan analyse --configuration="./vendor/phpstan/phpstan-strict-rules/rules.neon" --level=7 src
+
+docker exec -ti erisk-symfony phpcs --standard=PSR2 -np src
+
+docker exec -ti erisk-symfony phpcbf src
+
+docker exec -ti erisk-symfony /vendor/bin/rector process -l php72 src
+
+# Generar fichero Swagger / OpenApi
+docker-compose exec erisk-symfony bin/console api:openapi:export --spec-version=3 --yaml
+
+# Ejecutar tests PHP
+docker exec -ti erisk-symfony ./bin/phpunit
+
+# Ejecutar tests Webpack
+docker exec -ti erisk-symfony yarn test --watch
