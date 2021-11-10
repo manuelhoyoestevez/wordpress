@@ -20,4 +20,3 @@ RUN echo "xdebug.log=\"/var/www/html/var/log/xdebug.log\"" >> /usr/local/etc/php
 
 # Exposición del puerto
 EXPOSE 80
-

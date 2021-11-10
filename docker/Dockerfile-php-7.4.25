@@ -25,7 +25,8 @@ RUN docker-php-ext-install -j$(nproc) bcmath mbstring pdo pdo_mysql
 RUN pecl install xdebug-3.1.1
 RUN docker-php-ext-enable xdebug
 
-ENV XDEBUG_SESSION=PHPSTORM
+RUN echo "xdebug.mode=debug"             >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN echo "xdebug.idekey=PHPSTORM"        >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 RUN echo "xdebug.remote_enable=1"        >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 RUN echo "xdebug.start_with_request=no"  >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 RUN echo "xdebug.client_port=9003"       >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
