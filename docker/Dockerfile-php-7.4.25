@@ -19,7 +19,7 @@ RUN echo "<?php phpinfo();" > /var/www/html/index.php
 RUN apt-get update && apt-get install -y git zip curl wget cron vim gnupg zlib1g-dev libssl-dev libxml2-dev apt-transport-https lsb-release libonig-dev
 
 # Instlación de extesiones PHP
-RUN docker-php-ext-install -j$(nproc) bcmath mbstring pdo pdo_mysql
+RUN docker-php-ext-install -j$(nproc) bcmath mbstring pdo pdo_mysql mysqli
 
 # Instalación de Xdebug
 RUN pecl install xdebug-3.1.1
