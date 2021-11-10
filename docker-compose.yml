@@ -11,6 +11,7 @@ services:
     hostname: mhedev-php-7.4.25
     environment:
       - SERVICE_NAME=mhedev-php-7.4.25
+    command: tail -f /dev/null 
 
   # Contenedor Wordpress
   mhedev-wordpress:

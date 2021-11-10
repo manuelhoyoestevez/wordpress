@@ -16,21 +16,21 @@ RUN rm -rf ./vendor/ ./var/ .env ./composer.phar
 RUN echo "<?php phpinfo();" > /var/www/html/index.php
 
 # Instalación de módulos
-RUN apt-get update && apt-get install -y git zip curl wget cron vim gnupg mysql-client zlib1g-dev libssl-dev libxml2-dev apt-transport-https lsb-release
+RUN apt-get update && apt-get install -y git zip curl wget cron vim gnupg zlib1g-dev libssl-dev libxml2-dev apt-transport-https lsb-release libonig-dev
 
 # Instlación de extesiones PHP
-RUN docker-php-ext-install -j$(nproc) bcmath mbstring pdo pdo_mysql soap zip pcntl
+RUN docker-php-ext-install -j$(nproc) bcmath mbstring pdo pdo_mysql
 
 # Instalación de Xdebug
-RUN pecl install xdebug-2.6.0
+RUN pecl install xdebug-3.1.1
 RUN docker-php-ext-enable xdebug
 
-RUN echo "xdebug.idekey=PHPSTORM"       >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN echo "xdebug.remote_enable=1"       >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN echo "xdebug.remote_autostart=0"    >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN echo "xdebug.remote_port=9000"      >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN echo "xdebug.remote_handler=dbgp"   >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN echo "xdebug.remote_connect_back=0" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+ENV XDEBUG_SESSION=PHPSTORM
+RUN echo "xdebug.remote_enable=1"        >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN echo "xdebug.start_with_request=no"  >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN echo "xdebug.client_port=9003"       >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN echo "xdebug.remote_handler=dbgp"    >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN echo "xdebug.discover_client_host=0" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
 # Instalación de composer (comando)
 RUN curl --silent --show-error https://getcomposer.org/installer | php
@@ -55,4 +55,4 @@ RUN apt-get install -y nodejs
 # Instalación de yarn (comando)
 RUN npm install -g yarn
 
-CMD bash -c "php -v && composer -V"
+#CMD bash -c "php -v && composer -V"
