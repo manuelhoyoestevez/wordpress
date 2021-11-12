@@ -29,6 +29,26 @@ services:
     ports:
       - '8080:80'
 
+  mhedev-ftp:
+    container_name: mhedev-ftp
+    hostname: mhedev-ftp
+    image: bogem/ftp:latest
+    environment:
+      - SERVICE_NAME=mhedev-sftp
+      - FTP_USER=ftp
+      - FTP_PASS=mhedev
+      - PASV_ADDRESS=mhedev-ftp
+    volumes:
+      - ./wordpress:/home/vsftpd
+    expose:
+      - 20
+      - 21
+      - 47400-47470
+    ports:
+      - '20:20'
+      - '21:21'
+      - '47400-47470:47400-47470'
+
   # Servidor MySQL que precarga el fichero current.sql
   mhedev-mysql:
     image: mysql:5.6.51
