@@ -22,7 +22,7 @@ services:
     environment:
       - SERVICE_NAME=mhedev-wordpress
       - DATABASE_URL=mysql://mhedev:mhedev@mhedev-mysql:3306/mhedev
-      - XDEBUG_SESSION=1
+      - XDEBUG_SESSION=PHPSTORM
       - DOCKER_HOST=172.17.0.1 # Se puede determinar su valor ejecutando 'ifconfig' y verificando la ip de la interfaz 'docker0'.
     volumes:
       - ./wordpress:/var/www/html

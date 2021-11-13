@@ -15,13 +15,11 @@ RUN chmod 666 ./var/log/xdebug.log
 RUN echo "error_reporting=E_ALL" >> /usr/local/etc/php/conf.d/error_reporting.ini
 
 RUN echo "xdebug.client_host=\${DOCKER_HOST}" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN echo "xdebug.mode=develop,debug"     >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN echo "xdebug.mode=debug"             >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 RUN echo "xdebug.start_with_request=yes" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN echo "xdebug.discover_client_host=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+
 #RUN echo "xdebug.idekey=PHPSTORM"        >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-#RUN echo "xdebug.remote_enable=1"        >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-#RUN echo "xdebug.client_port=9003"       >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-#RUN echo "xdebug.remote_handler=dbgp"    >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-#RUN echo "xdebug.discover_client_host=0" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
 # Es necesario que el contenedor contenga la variable de entorno DOCKER_HOST, que representa la IP del cliente Xdebug.
 # Normalmente toma el valor 172.17.0.1 en el fichero docker-compose.
