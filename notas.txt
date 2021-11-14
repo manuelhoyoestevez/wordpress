@@ -1,0 +1,7 @@
+Para que el FTP funcione es necesario dar permisos de escritura a todos los ficheros
+
+# Cambiar permisos recursivamente solo a directorios:
+sudo find . -type d -exec chmod -R 0777 {} \;
+
+#Cambiar permisos recursivamente solo a archivos:
+sudo find . -type f -exec chmod -R 0666 {} \;
