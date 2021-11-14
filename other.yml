@@ -1,33 +1,25 @@
 version: "2"
 
 services:
-  # Contenedor de innstalación de PHP
-  mhedev-php-7.4.25:
-    build:
-      context: ./docker
-      dockerfile: Dockerfile-php-7.4.25
-    image: mhedev/php:7.4.25
-    container_name: mhedev-php-7.4.25
-    hostname: mhedev-php-7.4.25
+  wordpress-alpine:
+    image: wordpress:php7.4-apache
+    hostname: wordpress-alpine
+    container_name: wordpress-alpine
     environment:
-      - SERVICE_NAME=mhedev-php-7.4.25
-    command: php -v
-
-  # Contenedor Wordpress
-  mhedev-wordpress:
-    build: ./wordpress
-    image: mhedev/wordpress:5.8.1
-    container_name: mhedev-wordpress
-    hostname: mhedev-wordpress
-    environment:
-      - SERVICE_NAME=mhedev-wordpress
-      - DATABASE_URL=mysql://mhedev:mhedev@mhedev-mysql:3306/mhedev
-      - XDEBUG_SESSION=PHPSTORM
-      - DOCKER_HOST=172.17.0.1 # Se puede determinar su valor ejecutando 'ifconfig' y verificando la ip de la interfaz 'docker0'.
+      - SERVICE_NAME=wordpress-alpine
+      - WORDPRESS_DB_HOST=mhedev-mysql
+      - WORDPRESS_DB_USER=mhedev
+      - WORDPRESS_DB_PASSWORD=mhedev
+      - WORDPRESS_DB_NAME=mhedev
     volumes:
       - ./wordpress:/var/www/html
+    expose:
+      - 22
     ports:
-      - '8082:80'
+      - '8080:80'
+      - '2222:22'
+    depends_on:
+      - mhedev-mysql
 
   mhedev-ftp:
     container_name: mhedev-ftp

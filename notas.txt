@@ -1,5 +1,7 @@
 Para que el FTP funcione es necesario dar permisos de escritura a todos los ficheros
 
+Para evitar eso, habría que determinar con qué grupo funciona panubo-ftp y agregar al usuario actual a ese grupo.
+
 # Cambiar permisos recursivamente solo a directorios:
 sudo find . -type d -exec chmod -R 0777 {} \;
 
